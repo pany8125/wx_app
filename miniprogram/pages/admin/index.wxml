@@ -1,5 +1,12 @@
 <view class="container">
   <view class="card">
+    <view class="section-title">教师登录（本地口令）</view>
+    <input class="input" placeholder="输入口令: 123456" password bindinput="onPwdInput" />
+    <button class="btn-primary" bindtap="doLogin">登录</button>
+    <view wx:if="{{!authed}}" class="tips">未登录不可保存，先输入口令</view>
+  </view>
+
+  <view class="card" wx:if="{{authed}}">
     <view class="section-title">创建/编辑场次</view>
     <input class="input" placeholder="场次名称" bindinput="onFieldChange" data-key="name" value="{{session.name}}" />
     <input class="input" placeholder="场次码（可分享给学员）" bindinput="onFieldChange" data-key="code" value="{{session.code}}" />
@@ -9,10 +16,10 @@
     <picker mode="date" value="{{session.end}}" bindchange="onDateChange" data-key="end">
       <view class="picker">结束日期：{{session.end || '选择日期'}} </view>
     </picker>
-    <button class="btn-primary" bindtap="saveSession">保存场次（占位）</button>
+    <button class="btn-primary" bindtap="saveSession">保存场次（本地）</button>
   </view>
 
-  <view class="card">
+  <view class="card" wx:if="{{authed}}">
     <view class="section-title">题目配置</view>
     <block wx:for="{{questions}}" wx:key="id">
       <view class="q-item">

@@ -33,3 +33,9 @@
   text-align: center;
   font-weight: 600;
 }
+
+.tips {
+  margin-top: 8px;
+  color: #9ca3af;
+  font-size: 12px;
+}

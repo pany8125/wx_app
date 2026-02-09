@@ -4,12 +4,54 @@ Page({
   data: {
     sessionId: '',
     questions: [],
-    submitting: false
+    submitting: false,
+    loading: true,
+    source: 'cloud'
   },
 
   onLoad(options) {
     const sessionId = options.sessionId || 'DEMO-SESSION';
-    this.setData({ sessionId, questions: getMockQuestions() });
+    this.setData({ sessionId });
+    this.initQuestions(sessionId);
+  },
+
+  async initQuestions(sessionId) {
+    this.setData({ loading: true });
+
+    if (wx.cloud) {
+      try {
+        const res = await wx.cloud.callFunction({
+          name: 'getSession',
+          data: { code: sessionId }
+        });
+        const result = res && res.result;
+        if (result && result.ok && result.questions) {
+          this.setData({
+            questions: result.questions,
+            loading: false,
+            source: 'cloud'
+          });
+          return;
+        }
+      } catch (err) {
+        console.error('getSession error', err);
+      }
+    }
+
+    const saved = wx.getStorageSync('sessionPayload');
+    if (saved && saved.session && saved.session.code === sessionId) {
+      this.setData({
+        questions: saved.questions || [],
+        loading: false,
+        source: 'local'
+      });
+    } else {
+      this.setData({
+        questions: getMockQuestions(),
+        loading: false,
+        source: 'mock'
+      });
+    }
   },
 
   onSelectSingle(e) {
