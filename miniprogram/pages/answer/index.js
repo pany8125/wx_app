@@ -1,5 +1,3 @@
-const { getMockQuestions } = require('../../utils/mock');
-
 Page({
   data: {
     sessionId: '',
@@ -10,7 +8,11 @@ Page({
   },
 
   onLoad(options) {
-    const sessionId = options.sessionId || 'DEMO-SESSION';
+    const sessionId = options.sessionId || '';
+    if (!sessionId) {
+      wx.showToast({ title: '缺少场次码', icon: 'none' });
+      return;
+    }
     this.setData({ sessionId });
     this.initQuestions(sessionId);
   },
@@ -45,13 +47,15 @@ Page({
         loading: false,
         source: 'local'
       });
-    } else {
-      this.setData({
-        questions: getMockQuestions(),
-        loading: false,
-        source: 'mock'
-      });
+      return;
     }
+
+    wx.showToast({ title: '未找到该场次', icon: 'none' });
+    this.setData({
+      questions: [],
+      loading: false,
+      source: 'none'
+    });
   },
 
   onSelectSingle(e) {

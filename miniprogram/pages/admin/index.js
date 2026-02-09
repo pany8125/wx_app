@@ -1,8 +1,5 @@
-const demoQuestions = [
-  { id: 'q1', title: '培训主题是否清晰？', typeLabel: '单选', value: '' },
-  { id: 'q2', title: '需要改进的环节', typeLabel: '多选', value: [] },
-  { id: 'q3', title: '整体打分', typeLabel: '评分', value: 0 }
-];
+const { getMockQuestions } = require('../../utils/mock');
+const demoQuestions = getMockQuestions();
 
 const ADMIN_SECRET = '123456';
 
