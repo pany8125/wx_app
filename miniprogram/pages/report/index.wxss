@@ -1,0 +1,42 @@
+.hero .title {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.hero .score {
+  font-size: 22px;
+  font-weight: 700;
+  color: #0A59F7;
+  margin-bottom: 4px;
+}
+
+.hero .desc {
+  color: #6b7280;
+}
+
+.block .row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.q {
+  max-width: 70%;
+}
+
+.v {
+  color: #0A59F7;
+  font-weight: 600;
+}
+
+.btn-secondary {
+  background: #fff;
+  color: #0A59F7;
+  border: 1px solid #0A59F7;
+  border-radius: 10px;
+  padding: 12px;
+  margin-top: 8px;
+  text-align: center;
+  font-weight: 600;
+}

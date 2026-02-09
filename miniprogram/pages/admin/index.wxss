@@ -1,0 +1,35 @@
+.picker {
+  padding: 12px;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  margin-top: 10px;
+  background: #fff;
+}
+
+.input {
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 12px;
+  margin-top: 10px;
+  background: #fff;
+}
+
+.q-item {
+  padding: 10px 0;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.q-item:last-child {
+  border-bottom: none;
+}
+
+.btn-secondary {
+  margin-top: 12px;
+  background: #fff;
+  color: #0A59F7;
+  border: 1px solid #0A59F7;
+  border-radius: 10px;
+  padding: 12px;
+  text-align: center;
+  font-weight: 600;
+}

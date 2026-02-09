@@ -1,0 +1,21 @@
+<view class="container">
+  <view class="card hero">
+    <text class="hero-title">AI培效通</text>
+    <text class="hero-sub">扫码或输入场次码，开始培训答题</text>
+  </view>
+
+  <view class="card form">
+    <view class="section-title">快速加入</view>
+    <button class="btn-primary" bindtap="handleScan">扫码进入场次</button>
+    <view class="divider">或</view>
+    <input class="input" placeholder="请输入场次码" bindinput="onSessionInput" value="{{sessionId}}" />
+    <button class="btn-secondary" bindtap="handleJoin" disabled="{{!sessionId}}">进入场次</button>
+  </view>
+
+  <view class="card tips">
+    <view class="section-title">使用说明</view>
+    <text>1. 请确保培训老师已创建场次并开启答题窗口。</text>
+    <text>2. 扫码或输入场次码后，即可开始答题。</text>
+    <text>3. 全程支持微信一键登录，数据仅用于培训评估。</text>
+  </view>
+</view>

@@ -1,0 +1,24 @@
+<view class="container">
+  <view class="card">
+    <view class="section-title">创建/编辑场次</view>
+    <input class="input" placeholder="场次名称" bindinput="onFieldChange" data-key="name" value="{{session.name}}" />
+    <input class="input" placeholder="场次码（可分享给学员）" bindinput="onFieldChange" data-key="code" value="{{session.code}}" />
+    <picker mode="date" value="{{session.start}}" bindchange="onDateChange" data-key="start">
+      <view class="picker">开始日期：{{session.start || '选择日期'}} </view>
+    </picker>
+    <picker mode="date" value="{{session.end}}" bindchange="onDateChange" data-key="end">
+      <view class="picker">结束日期：{{session.end || '选择日期'}} </view>
+    </picker>
+    <button class="btn-primary" bindtap="saveSession">保存场次（占位）</button>
+  </view>
+
+  <view class="card">
+    <view class="section-title">题目配置</view>
+    <block wx:for="{{questions}}" wx:key="id">
+      <view class="q-item">
+        <text>{{index + 1}}. {{item.title}}（{{item.typeLabel}}）</text>
+      </view>
+    </block>
+    <button class="btn-secondary" bindtap="addQuestion">新增题目（占位）</button>
+  </view>
+</view>

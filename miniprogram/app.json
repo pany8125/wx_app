@@ -1,0 +1,16 @@
+{
+  "pages": [
+    "pages/scan-entry/index",
+    "pages/answer/index",
+    "pages/report/index",
+    "pages/admin/index"
+  ],
+  "window": {
+    "navigationBarTitleText": "AI培效通",
+    "navigationBarBackgroundColor": "#0A59F7",
+    "navigationBarTextStyle": "white",
+    "backgroundTextStyle": "light"
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

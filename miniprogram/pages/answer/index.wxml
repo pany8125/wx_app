@@ -1,0 +1,37 @@
+<view class="container">
+  <view class="card header">
+    <view class="title">场次：{{sessionId || '示例场次'}}</view>
+    <view class="sub">请在时间窗口内完成答题</view>
+  </view>
+
+  <block wx:for="{{questions}}" wx:key="id">
+    <view class="card question">
+      <view class="question-title">{{index + 1}}. {{item.title}}</view>
+      <view class="question-type">{{item.typeLabel}}</view>
+
+      <block wx:if="{{item.type === 'single' || item.type === 'multi'}}">
+        <label wx:for="{{item.options}}" wx:key="value" class="option">
+          <checkbox wx:if="{{item.type === 'multi'}}" value="{{option.value}}" checked="{{item.value.indexOf(option.value) !== -1}}" data-qid="{{item.id}}" data-val="{{option.value}}" bindchange="onSelectMulti" />
+          <radio wx:if="{{item.type === 'single'}}" value="{{option.value}}" checked="{{item.value === option.value}}" data-qid="{{item.id}}" data-val="{{option.value}}" bindchange="onSelectSingle" />
+          <text>{{option.label}}</text>
+        </label>
+      </block>
+
+      <block wx:if="{{item.type === 'text'}}">
+        <textarea class="input" placeholder="请输入您的看法" data-qid="{{item.id}}" bindinput="onInputText" value="{{item.value}}"></textarea>
+      </block>
+
+      <block wx:if="{{item.type === 'score'}}">
+        <view class="rating">
+          <block wx:for="{{5}}" wx:key="index">
+            <text class="star {{index < item.value ? 'active' : ''}}" data-qid="{{item.id}}" data-val="{{index + 1}}" bindtap="onScore">★</text>
+          </block>
+        </view>
+      </block>
+    </view>
+  </block>
+
+  <view class="card footer">
+    <button class="btn-primary" bindtap="onSubmit" disabled="{{submitting}}">{{submitting ? '提交中...' : '提交答卷'}} </button>
+  </view>
+</view>

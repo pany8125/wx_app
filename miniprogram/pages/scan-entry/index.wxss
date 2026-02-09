@@ -1,0 +1,51 @@
+.hero {
+  text-align: center;
+  padding: 24px 16px;
+}
+
+.hero-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #0A59F7;
+}
+
+.hero-sub {
+  display: block;
+  margin-top: 8px;
+  color: #556270;
+}
+
+.form button {
+  margin-top: 12px;
+}
+
+.btn-secondary {
+  background: #fff;
+  color: #0A59F7;
+  border: 1px solid #0A59F7;
+  border-radius: 10px;
+  padding: 12px;
+  text-align: center;
+  font-weight: 600;
+}
+
+.divider {
+  text-align: center;
+  margin: 10px 0;
+  color: #9aa5b1;
+}
+
+.input {
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 12px;
+  margin-top: 12px;
+  background: #fff;
+}
+
+.tips text {
+  display: block;
+  margin-bottom: 6px;
+  color: #4a5568;
+  line-height: 1.5;
+}

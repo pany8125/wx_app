@@ -1,0 +1,23 @@
+<view class="container">
+  <view class="card hero">
+    <view class="title">场次：{{sessionId}}</view>
+    <view class="score">整体得分：{{report.overallScore}} / 100</view>
+    <view class="desc">{{report.summary}}</view>
+  </view>
+
+  <view class="card block">
+    <view class="section-title">题目分析</view>
+    <block wx:for="{{report.questions}}" wx:key="id">
+      <view class="row">
+        <text class="q">{{item.title}}</text>
+        <text class="v">正确率 {{item.accuracy}}%</text>
+      </view>
+    </block>
+  </view>
+
+  <view class="card block">
+    <view class="section-title">导出 / 分享</view>
+    <button class="btn-primary" bindtap="onExport">导出报告（占位）</button>
+    <button class="btn-secondary" bindtap="onShare">分享给讲师/学员</button>
+  </view>
+</view>
