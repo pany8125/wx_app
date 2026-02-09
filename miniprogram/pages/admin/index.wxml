@@ -7,8 +7,26 @@
   </view>
 
   <view class="card" wx:if="{{authed}}">
+    <view class="section-title">我的场次</view>
+    <view wx:if="{{loadingList}}" class="tips">加载中...</view>
+    <block wx:for="{{sessions}}" wx:key="code">
+      <view class="session-row">
+        <view class="session-info">
+          <view class="session-name">{{item.name || '未命名'}}（{{item.code || '--'}}）</view>
+          <view class="session-meta">{{item.updatedAt ? ('更新于 ' + item.updatedAt) : ''}}</view>
+        </view>
+        <view class="session-status {{item.status === 'published' ? 'status-pub' : 'status-draft'}}">{{item.status === 'published' ? '已发布' : '草稿'}}</view>
+        <button class="btn-ghost" size="mini" data-code="{{item.code}}" bindtap="loadSession">编辑</button>
+      </view>
+    </block>
+  </view>
+
+  <view class="card" wx:if="{{authed}}">
     <view class="section-title">创建/编辑场次</view>
-    <input class="input" placeholder="场次名称" bindinput="onFieldChange" data-key="name" value="{{session.name}}" />
+    <view class="inline">
+      <input class="input" placeholder="场次名称" bindinput="onFieldChange" data-key="name" value="{{session.name}}" />
+      <view class="status-pill {{currentStatus === 'published' ? 'status-pub' : 'status-draft'}}">{{currentStatus === 'published' ? '已发布' : '草稿'}}</view>
+    </view>
     <input class="input" placeholder="场次码（可分享给学员）" bindinput="onFieldChange" data-key="code" value="{{session.code}}" />
     <picker mode="date" value="{{session.start}}" bindchange="onDateChange" data-key="start">
       <view class="picker">开始日期：{{session.start || '选择日期'}} </view>
@@ -16,16 +34,32 @@
     <picker mode="date" value="{{session.end}}" bindchange="onDateChange" data-key="end">
       <view class="picker">结束日期：{{session.end || '选择日期'}} </view>
     </picker>
-    <button class="btn-primary" bindtap="saveSession">保存场次（本地）</button>
+    <view class="btn-row">
+      <button class="btn-secondary" bindtap="saveSession" loading="{{saving}}" disabled="{{saving}}">保存草稿</button>
+      <button class="btn-primary" data-action="publish" bindtap="saveSession" loading="{{saving}}" disabled="{{saving || currentStatus === 'published'}}">{{currentStatus === 'published' ? '已发布' : '发布场次'}} </button>
+    </view>
   </view>
 
   <view class="card" wx:if="{{authed}}">
     <view class="section-title">题目配置</view>
     <block wx:for="{{questions}}" wx:key="id">
       <view class="q-item">
-        <text>{{index + 1}}. {{item.title}}（{{item.typeLabel}}）</text>
+        <view class="q-row">
+          <text class="q-index">{{index + 1}}.</text>
+          <input class="input" placeholder="题干" value="{{item.title}}" data-qid="{{item.id}}" bindinput="updateQuestionTitle" disabled="{{currentStatus === 'published'}}" />
+        </view>
+        <view class="q-row">
+          <picker mode="selector" range="{{['单选','多选','评分','主观题']}}" value="{{['single','multi','score','text'].indexOf(item.type)}}" data-qid="{{item.id}}" bindchange="updateQuestionType" disabled="{{currentStatus === 'published'}}">
+            <view class="picker">题型：{{item.typeLabel || '单选'}}</view>
+          </picker>
+          <button class="btn-ghost danger" size="mini" data-qid="{{item.id}}" bindtap="removeQuestion" disabled="{{currentStatus === 'published'}}">删除</button>
+        </view>
+        <view wx:if="{{item.type === 'single' || item.type === 'multi'}}">
+          <textarea class="input" placeholder="选项内容，逗号分隔，例如：选项A,选项B,选项C" value="{{item.options.map(o=>o.label).join(',')}}" data-qid="{{item.id}}" bindinput="updateQuestionOptions" disabled="{{currentStatus === 'published'}}"></textarea>
+        </view>
+        <view class="tips">题型：{{item.typeLabel}}</view>
       </view>
     </block>
-    <button class="btn-secondary" bindtap="addQuestion">新增题目（占位）</button>
+    <button class="btn-secondary" bindtap="addQuestion" disabled="{{currentStatus === 'published'}}">新增题目</button>
   </view>
 </view>

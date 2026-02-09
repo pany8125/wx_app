@@ -6,7 +6,7 @@ const db = cloud.database();
 const collection = db.collection('sessions');
 
 exports.main = async (event) => {
-  const { session = {}, questions = [], adminSecret } = event || {};
+  const { session = {}, questions = [], adminSecret, action = 'save' } = event || {};
   const { code } = session;
 
   if (!code) {
@@ -18,8 +18,15 @@ exports.main = async (event) => {
     return { ok: false, message: '口令校验失败' };
   }
 
+  if (action === 'publish') {
+    if (!questions || !questions.length) {
+      return { ok: false, message: '发布前请添加题目' };
+    }
+  }
+
   const now = Date.now();
-  const baseData = { ...session, questions, updatedAt: now };
+  const status = action === 'publish' ? 'published' : session.status || 'draft';
+  const baseData = { ...session, questions, status, updatedAt: now };
 
   try {
     const exist = await collection.where({ code }).get();
@@ -29,13 +36,13 @@ exports.main = async (event) => {
       await collection.doc(doc._id).update({
         data: { ...baseData, version }
       });
-      return { ok: true, code, version, updatedAt: now, from: 'update' };
+      return { ok: true, code, version, updatedAt: now, from: 'update', status };
     }
 
     await collection.add({
       data: { ...baseData, version: 1, createdAt: now }
     });
-    return { ok: true, code, version: 1, createdAt: now, from: 'create' };
+    return { ok: true, code, version: 1, createdAt: now, from: 'create', status };
   } catch (err) {
     console.error('upsertSession error', err);
     return { ok: false, message: err.message || '云端异常' };

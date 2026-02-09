@@ -17,6 +17,9 @@ exports.main = async (event) => {
       return { ok: false, message: '未找到场次' };
     }
     const doc = res.data[0];
+    if (doc.status !== 'published') {
+      return { ok: false, message: '场次未发布' };
+    }
     return {
       ok: true,
       session: {
@@ -24,6 +27,7 @@ exports.main = async (event) => {
         name: doc.name,
         start: doc.start,
         end: doc.end,
+        status: doc.status,
         version: doc.version,
         updatedAt: doc.updatedAt || doc.createdAt
       },
