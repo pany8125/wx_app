@@ -1,4 +1,4 @@
-const ENV_ID = '请填写你的云环境ID';
+const ENV_ID = 'cloudbase-8gkmuei9c5912973';
 
 App({
   globalData: {
